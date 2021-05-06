@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筊杯動畫-手機</title>
+    <style>
+        * {
+            background-size: contain !important;
+
+        }
+
+        .lucky_contianer05_1 {
+            margin: 0;
+            padding: 130px 0px 0px 190px;
+            display: flex;
+            justify-content: space-between;
+
+
+        }
+
+        .lucky_content05_1 {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+
+        }
+        .item-group05_1 h6 {
+            margin-bottom: 50px;
+
+        }
+
+        .lucky_result05_1 {
+            position: relative;
+            width: 210px;
+            transform: translateY(120px);
+        }
+
+        .lucky_result05_1 p {
+            right: 0;
+            top: 130px;
+
+        }
+
+        .lucky_result05_1 h3 {
+            transform: translate(-190px, -100px);
+        }
+
+        /* 跳轉按鈕 */
+        .lucky_button05_1 {
+            border-radius: 30px;
+            color: #fff;
+            background-color: #cc543a;
+            border-style: none;
+            width: fit-content;
+            padding: 8px 30px;
+            margin-top: 10px;
+            font-size: 20px;
+
+        }
+
+        /* ------------ */
+        /* 求籤動畫 */
+        .lucky_Sign_animation05_1 {}
+
+        #YanCup {
+
+            animation-name: YanCup;
+            animation-duration: 3s;
+            /* width: 184px;
+            height: 108px; */
+            /* width: 180px;
+            height: 176.08px; */
+            width: 170px;
+            height: 160px;
+            animation-iteration-count: 1;
+            transform: translate(50%, -40%);
+            background: url("./img/Cup/cup-0.png") no-repeat;
+            /* border: 1px solid #cc543a; */
+            animation-fill-mode: forwards;
+        }
+
+        #YanCup_1 {
+            animation-name: YanCup01;
+            animation-duration: 3s;
+            animation-delay: 3s;
+            /* width: 110px;
+            height: 176.08px; */
+            width: 170px;
+            height: 160px;
+            top: -150px;
+            animation-iteration-count: 1;
+            background: url("./img/Cup/cup-2.png") no-repeat;
+            transform: translate(170%, 10%) rotate(-30deg);
+            left: 150px;
+            opacity: 1;
+            /* border: 1px solid #cc543a; */
+            visibility: hidden;
+            animation-fill-mode: forwards;
+        }
+
+        #YanCup_2 {
+
+            animation-name: YanCup02;
+            animation-duration: 1.5s;
+            animation-delay: 3s;
+            /* width: 110px;
+            height: 176.08px; */
+            width: 170px;
+            height: 160px;
+            animation-iteration-count: 1;
+            background: url("./img/Cup/cup-1.png") no-repeat;
+            transform: translate(20%, -70%) rotate(30deg);
+            transform-origin: bottom right;
+            /* border: 1px solid #cc543a; */
+            opacity: 1;
+            visibility: hidden;
+            animation-fill-mode: forwards;
+        }
+
+        #YanCup_3 {
+            animation-name: YanCup03;
+            animation-duration: 3s;
+            /* width: 300px;
+            height: 176.08px; */
+            width: 270px;
+            height: 160px;
+            animation-iteration-count: 1;
+            background: url("./img/Cup/Yan\ Cup-01-1.png") no-repeat;
+            transform-origin: bottom left;
+            transform: translate(50%, 0%);
+            /* border: 1px solid #cc543a; */
+            opacity: 1;
+            animation-fill-mode: forwards;
+            visibility: hidden;
+
+        }
+
+        @keyframes YanCup {
+            0% {
+                background: url("./img/Cup/cup-0.png") no-repeat;
+                /* opacity: 1; */
+                transform: translate(50%, -40%);
+            }
+
+            10% {
+                background: url("./img/Cup/cup-0.png") no-repeat;
+                /* transform: translateY(30%); */
+                transform: translate(50%, 30%);
+                /* opacity: 0.5; */
+
+            }
+
+            20% {
+                background: url("./img/Cup/cup-0.png") no-repeat;
+                transform: translate(50%, 30%);
+                /* opacity: 0; */
+
+            }
+        }
+
+        @keyframes YanCup01 {
+            0% {
+                background: url("./img/Cup/cup-2.png") no-repeat;
+                opacity: 1;
+                transform: translate(140%, 10%) rotate(-30deg);
+                /* border: 1px solid #cc543a; */
+
+            }
+
+            25% {
+                background: url("./img/Cup/cup-2.png") no-repeat;
+                transform: translate(150%, 70%) rotate(-30deg);
+                opacity: 1;
+            }
+
+            50% {
+                background: url("./img/Cup/cup-2.png") no-repeat;
+                transform: translate(160%, 100%) rotate(-30deg);
+                opacity: 0.5;
+            }
+
+
+
+            100% {
+                background: url("./img/Cup/cup-2.png") no-repeat;
+                transform: translate(170%, 80%) rotate(-30deg);
+                opacity: 1;
+                background-size: contain;
+
+            }
+
+
+        }
+
+        @keyframes YanCup02 {
+            0% {
+                background: url("./img/Cup/cup-1.png") no-repeat;
+                transform: translate(5%, -70%) rotate(30deg);
+                opacity: 1;
+                background-size: contain;
+            }
+
+            25% {
+                background: url("./img/Cup/cup-1.png") no-repeat;
+                transform: translate(-10%, -5%) rotate(30deg);
+                opacity: 1;
+
+            }
+
+            50% {
+                background: url("./img/Cup/cup-1.png") no-repeat;
+                transform: translate(-15%, 60%) rotate(30deg);
+                opacity: 0.5;
+
+            }
+
+
+
+            100% {
+                background: url("./img/Cup/cup-1.png") no-repeat;
+                transform: translate(-20%, 20%)rotate(30deg);
+                opacity: 1;
+
+            }
+
+
+        }
+
+        @keyframes YanCup03 {
+            0% {
+                background: url("./img/Cup/Yan\ Cup-01-1.png") no-repeat;
+                transform: translate(25%, 0%);
+                opacity: 0;
+
+            }
+
+            50% {
+                background: url("./img/Cup/Yan\ Cup-01-1.png") no-repeat;
+                transform: translate(25%, 20%);
+                opacity: 0.5;
+
+            }
+
+            100% {
+                background: url("./img/Cup/Yan\ Cup-01-1.png") no-repeat;
+                transform: translate(25%, 20%);
+                opacity: 1;
+
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button class="lucky_button05_1" id="slot" onClick="slotit();">擲筊</button> -->
+    <div class="lucky_content05_1">
+        <!-- <div class="hight"> -->
+        <div class="lucky_Sign_animation05_1">
+            <div id="YanCup"></div>
+            <div id="YanCup_1"></div>
+            <div id="YanCup_2"></div>
+            <div id="YanCup_3"></div>
+        </div>
+
+        <div class="lucky_result05_1">
+            <!-- <h3 id="result_title">笑筊</h3> -->
+            <!-- <p id="result_txt">求籤失敗，請重新求籤</p> -->
+            <!-- <button class="lucky_button05_1" id="draw_again">重新求籤</button> -->
+        </div>
+        <!-- </div> -->
+
+    </div>
+    <!-- <button class="lucky_button05_1" id="gogetit" onClick="gotit('1');">看籤詩解</button> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script>
+        // querySelector()可以選id也可以選class
+        document.getElementById('YanCup').addEventListener('animationend', function () {
+            $('#YanCup_1').css('visibility', 'visible');
+            $('#YanCup_2').css('visibility', 'visible');
+            $('#YanCup').css('visibility', 'hidden');
+        });
+        document.getElementById('YanCup_1').addEventListener('animationend', function () {
+            $('#YanCup_1').css('visibility', 'hidden');
+            $('#YanCup_2').css('visibility', 'hidden');
+            $('#YanCup_3').css('visibility', 'visible');
+        });
+    </script>
+</body>
+
+</html>

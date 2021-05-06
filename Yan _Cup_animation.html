@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筊杯動畫</title>
+    <style>
+        .lucky_contianer05_1 {
+            margin: 0;
+            padding: 130px 0px 0px 190px;
+            display: flex;
+            justify-content: space-between;
+
+
+        }
+
+        .lucky_content05_1 {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            /* padding-left: 180px; */
+            /* padding-top: 100px; */
+            /* padding-bottom: 200px; */
+            /* border: 1px solid rgb(255, 0, 0);  */
+        }
+
+        /* .hight {
+            padding: 0;
+            margin: 0;
+        } */
+
+        .item-group05_1 {
+            /* border: 1px solid rgba(0, 64, 255, 0.952);  */
+        }
+
+        .item-group05_1 h6 {
+            margin-bottom: 50px;
+
+        }
+
+        /* 求籤動畫 */
+        .lucky_Sign_animation05_1 {
+            width: 350px;
+            transform: rotate(-30deg);
+        }
+
+        .lucky_Sign_animation05_1 img {
+            width: 100%;
+        }
+
+        .lucky_result05_1 {
+            position: relative;
+            width: 210px;
+            transform: translateY(120px);
+            /* border: 1px solid rgba(0, 64, 255, 0.952); */
+        }
+
+        .lucky_result05_1 p {
+            /* position: absolute; */
+            right: 0;
+            top: 130px;
+            /* margin-bottom: 50px; */
+        }
+
+        .lucky_result05_1 h3 {
+            transform: translate(-190px, -100px);
+        }
+
+        /* 跳轉按鈕 */
+        .lucky_button05_1 {
+            position: absolute;
+            /* right: 0;
+            bottom: 0; */
+
+            border-radius: 30px;
+            color: #fff;
+            background-color: #cc543a;
+            border-style: none;
+            width: fit-content;
+            padding: 8px 30px;
+            margin-top: 10px;
+            font-size: 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <button class="lucky_button05_1" id="slot" onClick="slotit();">擲筊</button>
+    <div class="lucky_content05_1">
+        <!-- <div class="hight"> -->
+        <div class="lucky_Sign_animation05_1">
+            <img src="./img/Yan Cup-02-1.png" alt="">
+        </div>
+
+        <div class="lucky_result05_1">
+            <h3 id="result_title">笑筊</h3>
+            <p id="result_txt">求籤失敗，請重新求籤</p>
+            <button class="lucky_button05_1" id="draw_again">重新求籤</button>
+        </div>
+        <!-- </div> -->
+
+    </div>
+    <button class="lucky_button05_1" id="gogetit" onClick="gotit('1');">看籤詩解</button>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script>
+        // slotit()自己命名的按鈕變數
+        function slotit() {
+            var slot_num = 1;
+            // $("#content_2").fadeIn(800).css("display", "block");
+            // $("#content_1").css("display", "none");
+            slot_num = Math.floor(Math.random() * 4);
+            // Math.floor() 函式會回傳小於等於所給數字的最大整數。
+            // Math.random()取得某區間內的隨機亂數
+            if (slot_num == 0) {
+                // slotresult取得筊杯結果的圖片位置
+                jQuery("#slotresult").attr("src", "./img/Yan Cup-03-1.png")
+                // jQuery()返回匹配元素的集合，這些元素基於傳遞的參數在DOM中找到，或者通過傳遞HTML字符串創建
+                $("#draw_again").show();//draw_again取得筊杯結果 的按鈕 
+                $("#slot").css("display", "none");//slot取得抽籤完按鈕的ID
+                $("#gogetit").css("display", "none");//gogetit取得詩籤結果的按鈕
+                $("#result_title").text("陰筊");//取得筊杯結果文字
+                $("#result_txt").text("求籤失敗，請重新求籤");//result_txt取得筊杯結果的文字敘述
+
+            } else if (slot_num > 2) {
+                jQuery("#slotresult").attr("src", "./img/Yan Cup-02-1.png")
+                $("#draw_again").show();
+                // show()如果被選元素已被隱藏，則顯示這些元素
+                $("#slot").css("display", "none");
+                $("#gogetit").css("display", "none");
+                $("#result_title").text("笑筊");
+                $("#result_txt").text("求籤失敗，請重新求籤");
+
+            } else {
+                jQuery("#slotresult").attr("src", "./img/Yan Cup-01-1.png")
+                // attr() 方法設置或返回被選元素的屬性值;可改變圖像
+                $("#result_title").text("聖筊");
+                $("#result_txt").text("求籤成功，請領取籤詩");
+                $("#draw_again").css("display", "none");
+                $("#slot").css("display", "none");
+                $("#gogetit").show();
+            }
+    </script>
+</body>
+
+</html>
