@@ -237,6 +237,11 @@
                 object-fit: cover;
                 transform: .5s;
             }
+            .shop_m0{
+                margin: 0;
+                margin-bottom: 1rem;
+                padding: 0px 5px;
+            }
             .shop_Scaling{
                 opacity: 1;
                 transition: .5s;
@@ -263,19 +268,10 @@
                 border-radius: 50%;
                 width: 25px;
                 height: 25px;
-
+                border-style:1px solid #cc543a;
 
             }
 
-            /* .fa-heart {
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center;
-                transform: translateY(35%);
-                color: #4d4b4b;
-
-            } */
             .shop_icon {
                 position: absolute;
                 right: 5%;
@@ -285,9 +281,15 @@
                 border-radius: 50%;
                 width: 35px;
                 height: 35px;
+                border: 2px solid #cc543a;
+                
             }
 
             .shop_icon:hover{
+                background-color:#FFF;
+                border: 2px solid #cc543a;
+            }
+            .shop_icon:active{
                 background-color:#cc543a;
             }
             .fa-heart {
@@ -295,13 +297,17 @@
                 align-items: center;
                 flex-direction: column;
                 justify-content: center;
-                transform: translateY(35%);
+                transform: translateY(32%);
                 color: #cc543a;
                 font-size: 22px;
     
             }
-            .fa-heart:hover
-            ,.fa-heart:active{
+            .fa-heart:hover{
+                color: #cc543a;
+                font-weight: 900;
+                font-size: 22px;
+            }
+            .fa-heart:active{
                 color: #fff;
                 font-weight: 900;
                 font-size: 22px;
@@ -473,7 +479,7 @@
                 /* width: 250px; */
                 width: 100%;
                 height: 364px;
-
+                border-radius: 10px 10px 0% 0%;
             }
     
             .shop_card_img img {
@@ -497,6 +503,11 @@
                 
 
             }
+            .shop_fff{
+                background-color:#fff;
+                border-radius: 10px;
+                box-shadow:2px 1px 3px #33333364;
+            }
             .shop_card02 {
                 display: none;
             }
@@ -504,20 +515,28 @@
 
             .shop_card-text_body{
                 width: 100%;
+                
             }
             .shop_card-title {
                 font-size: 22px;
-                /* font-weight: 600; */
                 margin-top: 10px;
-                
+                padding: 0px 5px;
                 
             }
     
             .shop_card-text {
                 font-size: 16px;
+                
             }
-    
-     
+            .shop_txt{
+                padding: 0px 5px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                /* white-space: nowrap;如果還有空間,要不要換行 */
+                /* text-overflow: ellipsis;文字溢出的地方電城點點點 */
+            }
+      
             /* 手機按鈕 */
             .shop_phone_button{
                  display: none;
@@ -721,6 +740,7 @@
                 height: 177px;
                 overflow: hidden;
                 background-color: #000;
+                border-radius: 10px 10px 0% 0%;
             }
 
             .shop_card_img img {
@@ -728,6 +748,11 @@
                 height: 100%;
                 object-fit: cover;
                 transform: .5s;
+            }
+            .shop_fff{
+                background-color:#fff;
+                border-radius: 10px;
+                box-shadow:2px 1px 3px #33333364;
             }
             .shop_Scaling{
                 opacity: 1;
@@ -744,16 +769,30 @@
             }
             .shop_card-title{
                 font-size: 10px;
-                /* font-weight: 600; */
+                padding: 0px 5px;
+            }
+            .shop_card-title p {
+                margin: 0;
             }
             .shop_card-text{
                 font-size: 8px;
-                /* display: none; */
+                
+                
+            }
+            .shop_txt{
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                /* white-space: nowrap;如果還有空間,要不要換行 */
+                /* text-overflow: ellipsis;文字溢出的地方電城點點點 */
             }
             .shop_card_img{
                 position: relative;
             }
-    
+            .shop_m0{
+                margin: 0;
+                padding: 0px 5px;
+            }
             .shop_icon {
                 position: absolute;
                 right: 2%;
@@ -763,8 +802,14 @@
                 border-radius: 50%;
                 width: 30px;
                 height: 30px;
+                border: 2px solid #cc543a;
             }
+        
             .shop_icon:hover{
+                background-color:#FFF;
+                border: 2px solid #cc543a;
+            }
+            .shop_icon:active{
                 background-color:#cc543a;
             }
             .fa-heart {
@@ -772,12 +817,17 @@
                 align-items: center;
                 flex-direction: column;
                 justify-content: center;
-                transform: translateY(35%);
+                transform: translateY(32%);
                 color: #cc543a;
                 font-size: 20px;
             }
-            .fa-heart:hover
-            ,.fa-heart:active{
+
+            .fa-heart:hover{
+                color: #cc543a;
+                font-weight: 100;
+                font-size: 20px;
+            }
+            .fa-heart:active{
                 color: #fff;
                 font-weight: 900;
                 font-size: 20px;
