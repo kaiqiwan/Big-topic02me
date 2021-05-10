@@ -601,13 +601,13 @@
                 padding: 15px;
             }
             /* 手機按鈕 */
-            .collapse{
+            /* .collapse{
                position: absolute;
                right: 30px;
                top: 170px;
                z-index: 50;
                
-            }
+            } */
             .shop_phone_button select{
                 border-radius: 30px;
                 padding: 0px 5px;
@@ -665,7 +665,7 @@
                 background: #cc543a;
             }
             .slider.slider-horizontal{
-                width: 150px;
+                width: 100%;
                 height: 20px;
             }
             /* border-bottom-style: 1px solid #000; */
@@ -812,6 +812,10 @@
             .shop_icon:active{
                 background-color:#cc543a;
             }
+            .active{
+                background-color:#cc543a;
+            }
+            
             .fa-heart {
                 display: flex;
                 align-items: center;
