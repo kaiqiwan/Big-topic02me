@@ -27,7 +27,7 @@ $t_sql = "SELECT COUNT(1) FROM product $where ";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //拿到總共有幾筆
 $totalPages = ceil($totalRows / $perPage); //總共有幾頁
 // ceil()無條件進位
-
+// ??
 // if($page<1) $page=1;
 // if($page>$totalPages) $page=$totalPages;
 
