@@ -812,10 +812,6 @@
             .shop_icon:active{
                 background-color:#cc543a;
             }
-            .active{
-                background-color:#cc543a;
-            }
-            
             .fa-heart {
                 display: flex;
                 align-items: center;

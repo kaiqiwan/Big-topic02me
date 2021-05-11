@@ -1,74 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$title = "商品列表";
+$pageName = "product-list";
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/271f30e909.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap"
-        rel="stylesheet">
-    <title>Document</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
-        integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ=="
-        crossorigin="anonymous" />
-    <!-- google字體 -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap"
-        rel="stylesheet">
-    <!-- ------------- -->
-    <link rel="stylesheet" href="./css/nav_shop_footor.css">
-    <link rel="stylesheet" href="./css/temple-shop_css-text.css">
-    <style>
-        .collapsing {
-            /* position: absolute;
-            height: auto; */
-            transition: none;
-        }
 
-        .btn-primary:not(:disabled):not(.disabled):active {
-            background-color: #cc543a;
-            border-color: #cc543a;
-        }
-    </style>
-</head>
+require __DIR__ . '/product/__connect_db.php';
+// 分類
+// $c_sql = "SELECT * FROM categories WHERE parent_sid=0";
+// $cate_rows = $pdo->query($c_sql)->fetchAll();
+
+// $cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0;
+// $qs = [];
+// $where = ' WHERE 1 ';
+// if (!empty($cate)) {
+//     $where .= " AND category_sid=$cate ";
+//     $qs['cate'] = $cate;
+// }
+
+// SELECT * FROM `poetry` ORDER BY RAND() LIMIT 1
+
+//取得總筆數, 總頁數, 該頁的商品資料
+
+$perPage = 12; // 每一頁有幾筆
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1; // 用戶要看第幾頁的商品
+
+$t_sql = "SELECT COUNT(1) FROM product $where ";
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //拿到總共有幾筆
+$totalPages = ceil($totalRows / $perPage); //總共有幾頁
+// ceil()無條件進位
+
+// if($page<1) $page=1;
+// if($page>$totalPages) $page=$totalPages;
+
+$p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $perPage, $perPage);
+
+// $rows = $pdo->query($p_sql)->fetchAll();
+
+
+// echo json_encode([
+//         'perPage' => $perPage,
+//         'cate' => $cate,
+//         'page' => $page,
+//         'totalRows' => $totalRows,
+//         'totalPages' => $totalPages,
+//         'rows' => $rows,
+
+// ], JSON_UNESCAPED_UNICODE);
+?>
+<?php include __DIR__ . '/product/head.php'; ?>
 
 <body>
-
-    <nav class="shop_nav">
-        <div class="navbar">
-            <!-- ---fa-search放大鏡-- -->
-            <div class="shop_search  shop_search02 position-relative mb-5 ">
-                <input type="text" class=" form-control border-0 bg-transparent px-1" id="formGroupExampleInput"
-                    placeholder="找商品">
-                <i class="fa fa-search fa-lg"></i>
-            </div>
-            <!-- 請依檔案位置修改logo路徑 -->
-            <div class="logo_img">
-                <img src='/img/logo.png'>
-            </div>
-
-
-            <ul>
-                <li class="shop_nav_li">Explore / 探索</li>
-                <li class="shop_nav_li">TRIP / 行旅</li>
-                <li class="shop_nav_li">SERVICE / 線上服務</li>
-                <li class="shop_nav_li">SHOP / 商店</li>
-                <li class="shop_nav_li">CART / 購物車</li>
-                <li class="shop_nav_li">MEMBER / 會員中心</li>
-            </ul>
-            <div class="ham"><i class="fas fa-bars"></i></div>
-        </div>
-        <hr class="navline">
-
-    </nav>
-
-
+    <?php include __DIR__ . '/product/navber.php'; ?>
     <div class=" container-fluid shop_body_outer p-0">
         <div class="shop_top100 shop_container container-fluid">
             <nav aria-label="breadcrumb ">
@@ -92,8 +73,7 @@
                 </select>
                 <!-- <button class="shop_phone_btn">價錢範圍</button> -->
 
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     價錢範圍
                 </button>
             </div>
@@ -101,8 +81,7 @@
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                     <div>
-                        <input id="ex8" data-slider-id='trip_price_range8' type="text" data-slider-min="0"
-                            data-slider-max="10000" data-slider-step="100" data-slider-value="5000" />
+                        <input id="ex8" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" />
                     </div>
                 </div>
             </div>
@@ -112,13 +91,11 @@
                     <!-- shop_pl_120 -->
                     <div class="shop_magnifier">
                         <div class="shop_search01 position-relative mb-5 ">
-                            <input type="text" class=" form-control border-0 bg-transparent px-1"
-                                id="formGroupExampleInput" placeholder="找商品...">
+                            <input type="text" class=" form-control border-0 bg-transparent px-1" id="formGroupExampleInput" placeholder="找商品...">
                             <i class="fa fa-search fa-lg"></i>
                         </div>
                         <div class="d-none ">
-                            <div class="rounded-circle"><i class="far fa-heart rounded-circle p-2"
-                                    style="background-color: #FFF; color:red;"></i></div>
+                            <div class="rounded-circle"><i class="far fa-heart rounded-circle p-2" style="background-color: #FFF; color:red;"></i></div>
                         </div>
                         <div class="trip_category ">
                             <h3 class="py-2">商品分類 |</h3>
@@ -135,9 +112,7 @@
                                     <!-- mt-5 -->
                                     <h3 class='mb-2'>價錢範圍 |</h3>
                                     <div>
-                                        <input id="ex9" data-slider-id='trip_price_range8' type="text"
-                                            data-slider-min="0" data-slider-max="10000" data-slider-step="100"
-                                            data-slider-value="5000" />
+                                        <input id="ex9" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" />
                                     </div>
                                 </li>
                             </ul>
@@ -374,82 +349,6 @@
             <a href="javascript:top0();"><img class="top0" src="./img/arrow-top01.svg" alt=""></a>
         </div> -->
     </div>
-    <footer>
-        <p>Copyright© TempleTrip.tw</p>
-    </footer>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
-        integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
-        crossorigin="anonymous"></script>
-
-    <script>
-        // With JQuery
-        $("#ex8").slider({
-            tooltip: 'always',
-            tooltip_position: 'bottom'
-        });
-        $("#ex9").slider({
-            tooltip: 'always',
-            tooltip_position: 'bottom'
-        });
-        // 火箭推
-        // function top0() {
-        //     window.scrollTo({
-        //         top: 0,
-        //         behavior: "smooth"
-        //     })
-        // }
-        //導覽列特效
-        $(document).ready(function () {
-            $('.shop_nav_li').hover(function () {
-                $(this).css('transform', 'scale(1.1)')
-            });
-            $('.shop_nav_li').click(function () {
-                $(this).css('color', '#cc543a')
-            });
-        });
-        $('.shop_nav_li').mouseleave(function () {
-            $('.shop_effect').css('transform', 'scale(1)');
-            $('.shop_effect').css('color', '#000');
-        });
-        //商品分類欄位特效
-        $(document).ready(function () {
-            $('.shop_effect').hover(function () {
-                // $(this).css('transform', 'scale(1.1)');
-
-            });
-            $('.shop_effect').click(function () {
-                $(this).css('color', '#cc543a');
-
-            });
-        });
-        $('.shop_effect').mouseleave(function () {
-            $('.shop_effect').css('transform', 'scale(1)');
-            $('.shop_effect').css('color', '#000');
-        });
-        //換頁按鈕特效
-        // $('.page-item').hover(function () {
-        //     $(this).css('color', '#fff');
-        //     $(this).css('background-color', '#cc543a');
-        // })
-        //手機按鈕
-        $('.shop_phone_btn').hover(function () {
-            $(this).css('color', '#fff');
-            $(this).css('background-color', '#cc543a');
-            $(this).css('border', 'transparent');
-        })
-        $('.shop_phone_btn').mouseleave(function () {
-            $(this).css('color', '#a2a2a2');
-            $(this).css('background-color', '#fff');
-        })
-    </script>
+    <?php include __DIR__ . '/product/footer.php'; ?>
+    <?php include __DIR__ . '/product/script.php'; ?>
 </body>
-
-</html>
