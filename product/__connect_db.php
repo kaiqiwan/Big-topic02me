@@ -1,6 +1,6 @@
 <?php
 $db_host = 'localhost';
-$db_name = 'mytest';
+$db_name = 'onetemple';
 $db_user = 'root';
 $db_pass = '';
 

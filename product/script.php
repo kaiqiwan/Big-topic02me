@@ -62,4 +62,36 @@
         $(this).css('color', '#a2a2a2');
         $(this).css('background-color', '#fff');
     })
+    //加入我的最愛按鈕
+    $(".shop_icon").click(function() {
+        // console.log('hi');
+        $(this).toggleClass('active');
+    });
+    // -----------------
+    $(".py-1.shop_effect").click(function() {
+        location.href = "?Categories=" + $(this).html();
+
+    });
+    // $(".py-1.shop_effect").click(function() {
+    //     location.href = "?Joint AND_Popular=" + $(this).html();
+    // });
+    $(".page-link.shop_page-item").click(function() {
+        searchkey = location.search.split('&');
+        searchkey.forEach(function(item) {
+            if (item.includes("page="))
+                searchkey.splice(searchkey.indexOf(item), 1)
+        });
+
+        if (location.search == "") {
+            location.href = "?page=" + $(this).attr('value');
+        } else
+        if (searchkey.length == 0) {
+            location.href = "?page=" + $(this).attr('value');
+        } else {
+            location.href = location.pathname + searchkey.join('&') + "&page=" + $(this).attr('value');
+        }
+    });
+    $("#exampleFormControlSelect1").change(function() {
+        location.href = "?Sort_by=" + $(this).find("option:selected").html();
+    });
 </script>

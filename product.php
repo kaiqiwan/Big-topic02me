@@ -4,6 +4,28 @@ $pageName = "product-list";
 
 
 require __DIR__ . '/product/__connect_db.php';
+$searchString = "1 ";
+$page = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
+if ($_GET != null) {
+    unset($_GET['page']);
+    foreach ($_GET as $key => $value) {
+        $searchString .= ' and ' . $key . '= "' . $value . '"';
+    }
+}
+//SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
+$c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * 12;
+$product = $pdo->query($c_sql)->fetchAll();
+// $sql01 = "SELECT * FROM shop ORDER BY Popularity_shop ASC";小到大
+$sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
+// $product = $pdo->query($sql02)->fetchAll();
+// SELECT * FROM shop ORDER BY Popularity_shop DESC
+
+// $data = mysql_query("SELECT * FROM DBNAME ORDER BY name ASC")
+// $data = mysql_query("SELECT * FROM DBNAME ORDER BY Popularity_shop");
+// $result = $pdo->query($sql)->fetchAll();
+// ORDER BY "?Popularity_shop=" [DESC];
+
+
 // 分類
 // $c_sql = "SELECT * FROM categories WHERE parent_sid=0";
 // $cate_rows = $pdo->query($c_sql)->fetchAll();
@@ -20,18 +42,18 @@ require __DIR__ . '/product/__connect_db.php';
 
 //取得總筆數, 總頁數, 該頁的商品資料
 
-$perPage = 12; // 每一頁有幾筆
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1; // 用戶要看第幾頁的商品
+// $perPage = 12; // 每一頁有幾筆
+// $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // 用戶要看第幾頁的商品
 
-$t_sql = "SELECT COUNT(1) FROM product $where ";
-$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //拿到總共有幾筆
-$totalPages = ceil($totalRows / $perPage); //總共有幾頁
+// $t_sql = "SELECT COUNT(1) FROM product $where ";
+// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //拿到總共有幾筆
+// $totalPages = ceil($totalRows / $perPage); //總共有幾頁
 // ceil()無條件進位
 // ??
 // if($page<1) $page=1;
 // if($page>$totalPages) $page=$totalPages;
 
-$p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $perPage, $perPage);
+// $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $perPage, $perPage);
 
 // $rows = $pdo->query($p_sql)->fetchAll();
 
@@ -102,7 +124,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                             <ul>
                                 <li class="py-1 shop_effect">線香</li>
                                 <li class="py-1 shop_effect">飾品</li>
-                                <li class="py-1 shop_effect">服飾</li>
+                                <li class="py-1 shop_effect">擺飾</li>
                                 <li class="py-1 shop_effect">平安符</li>
                                 <li class="py-1 shop_effect">聯名合作</li>
                                 <li class="py-1 shop_effect">熱門商品</li>
@@ -120,15 +142,17 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                     </div>
                 </div>
                 <div class="shop_body01 col-lg-8 p-0">
+
                     <div class="row shop_Separate ">
-                        <!-- col-lg-9 -->
+
                         <div class="shop_Displacement d-flex mb-5 display_none  col p-0">
                             <div class="shop_h3 display_none">
                                 <h4>配件飾品 | Accessories</h4>
                             </div>
                             <div class="form-inline display_none">
                                 <label class="pr-3" for="exampleFormControlSelect1">排序方式</label>
-                                <select class="form-control bg-transparent" id="exampleFormControlSelect1">
+                                <select class="form-control bg-transparent" id="exampleFormControlSelect1" onselect="alert(777)">
+                                    <option>請選擇</option>
                                     <option>人氣推薦</option>
                                     <option>評價最高</option>
                                     <option>價格(從低到高)</option>
@@ -137,11 +161,28 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                         </div>
                         <div class="container-flow ">
                             <div class="row col shop_body">
-                                <div class=" shop_card_body p-0">
+                                <?php foreach ($product as $value) { ?>
+                                    <div class=" shop_card_body p-0">
+                                        <div class="shop_fff">
+                                            <div class="  shop_card_img  ">
+                                                <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                                <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
+                                            </div>
+                                            <div class="shop_card-text_body">
+                                                <h5 class="shop_card-title"><?= $value['CommodityName_bigLabel'] ?></h5>
+                                                <div class="shop_card-text">
+                                                    <p class="m-0 shop_txt"><?= $value['Commodity_name_smallLabel'] ?></p>
+                                                    <p class="shop_m0">NTD <?= $value['price'] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <!-- <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0101.jfif" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0101.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">大甲鎮瀾宮 錢龜</h5>
@@ -156,7 +197,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0201.jfif" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0201.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">大甲鎮瀾宮 錢龜</h5>
@@ -171,7 +212,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0301.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0301.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">牛轉錢坤</h5>
@@ -183,12 +224,12 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     </div>
                                 </div>
 
-                                <!-- ----------------------------------------- -->
+                                <!-- ----------------------------------------- -/->
                                 <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0401.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0401.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">大甲鎮瀾宮 錢龜</h5>
@@ -204,7 +245,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0501.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0501.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">福壽安康</h5>
@@ -220,7 +261,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0601.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0601.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">百子圖開</h5>
@@ -232,12 +273,12 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     </div>
                                 </div>
 
-                                <!-- ----------------------------------------- -->
+                                <!-- ----------------------------------------- -/->
                                 <div class="shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0701.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0701.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">鴻圖大展</h5>
@@ -252,7 +293,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0801.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0801.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">桃紅柳綠</h5>
@@ -267,7 +308,7 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_0901.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_0901.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">路隨福行</h5>
@@ -278,11 +319,12 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                         </div>
                                     </div>
                                 </div>
-                                <div class="shop_card02 p-0">
+                                <!-- ------------------------------ -/->
+                                <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_1101.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_1001.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">奎星高照</h5>
@@ -293,36 +335,39 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                                         </div>
                                     </div>
                                 </div>
-                                <div class="shop_card02 p-0">
+                                <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_1201.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_1101.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">開運祈福</h5>
                                             <div class="shop_card-text">
                                                 <p class="m-0 shop_txt">開運祈福貔貅系列_彩色碧璽手鍊</p>
-                                                <p class="shop_m0">NTD 1,280</p>
+                                                <p class="shop_m0">NTD 1280</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="shop_card02 p-0">
+                                <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">
                                             <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                            <img class="shop_Scaling" src="./img/shop/shop_1~25/sh_1301.jpg" alt="">
+                                            <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/sh_1201.png" alt="">
                                         </div>
                                         <div class="shop_card-text_body">
                                             <h5 class="shop_card-title">開運祈福</h5>
                                             <div class="shop_card-text">
                                                 <p class="m-0 shop_txt">開運祈福貔貅系列_黑曜石手鍊</p>
-                                                <p class="shop_m0">NTD 1,380</p>
+                                                <p class="shop_m0">NTD 1380</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
+
+
+
 
 
 
@@ -332,11 +377,11 @@ $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $pe
                         <nav class="shop_page " aria-label="Page navigation example">
                             <!-- ml-10 -->
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link shop_page-item" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link shop_page-item" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link shop_page-item" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link shop_page-item" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link shop_page-item" href="#">></a></li>
+                                <li class="page-item"><a class="page-link shop_page-item" value="1">1</a></li>
+                                <li class="page-item"><a class="page-link shop_page-item" value="2">2</a></li>
+                                <li class="page-item"><a class="page-link shop_page-item" value="3">3</a></li>
+                                <li class="page-item"><a class="page-link shop_page-item" value="4">4</a></li>
+                                <li class="page-item"><a class="page-link shop_page-item" value="5">5</a></li>
                             </ul>
                         </nav>
                     </div>
