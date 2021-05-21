@@ -69,7 +69,8 @@
     });
     // -----------------
     $(".py-1.shop_effect").click(function() {
-        location.href = "?Categories=" + $(this).html();
+        //location.href = "?Categories=" + $(this).html();
+        location.href = "?" + $(this).attr('data-p');
 
     });
     // $(".py-1.shop_effect").click(function() {
@@ -94,4 +95,59 @@
     $("#exampleFormControlSelect1").change(function() {
         location.href = "?Sort_by=" + $(this).find("option:selected").html();
     });
+    // ------------------------------
+    $(document).ready(function() {
+        $(".shop_card_body .shop_icon").click(function() {
+            const card_id = $(this).closest('.shop_card_body').attr('data-sid');
+
+            console.log({
+                card_id
+            });
+
+
+            /*
+            $.ajax({
+                type: "POST", //傳送方式
+                url: "product_api.php", //傳送目的地
+                dataType: "json", //資料格式
+                data: { //傳送資料
+                    CardContent: $("#shop_card_text_body").val(), //表單欄位 ID nickname
+                    CadTitle: $("#shop_cad_title").val() //表單欄位 ID gender
+                },
+                success: function(data) {
+                    if (data.shop_card - text_body) { //如果後端回傳 json 資料有 nickname
+                        $("#card_body")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                        $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.nickname + '</font>」，性別為「<font color="#0000ff">' + data.gender + '</font>」！</font>');
+                    } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
+                        $("#card_body")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                        $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                    }
+                },
+                error: function(jqXHR) {
+                    $("#card_body")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                    $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
+                }
+            })
+            */
+        })
+    });
+    // --------------------------
+    // const addToCartBtn = $('#card_body');
+    // addToCartBtn.click(function() {
+    //     const card = $(this).closest('#shop_icon_Love');
+    //     const pid = card.attr('#card_body');
+    //     const qty = card.find('#shop_cad_title').val;
+
+    //     $.get {
+    //         ('product_api.php', {
+    //             action: 'add',
+    //             pid,
+    //             qty
+    //         }, function(date) {
+    //             console.log(date);
+    //             showCartCount(date);
+    //         }, 'json');
+    //     }
+
+    // })
 </script>

@@ -12,7 +12,7 @@ if ($_GET != null) {
         $searchString .= ' and ' . $key . '= "' . $value . '"';
     }
 }
-//SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
+// SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
 $c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * 12;
 $product = $pdo->query($c_sql)->fetchAll();
 // $sql01 = "SELECT * FROM shop ORDER BY Popularity_shop ASC";小到大
@@ -85,8 +85,8 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                 <button class="shop_phone_btn">聯名合作</button> -->
                 <!-- <button class="shop_phone_btn">商品分類</button> -->
                 <select class="shop_phone_btn">
-                    <option>商品分類</option>
-                    <option>線香</option>
+                    <option value="">商品分類</option>
+                    <option value="Categories=線香">線香</option>
                     <option>飾品</option>
                     <option>服飾</option>
                     <option>平安符</option>
@@ -122,12 +122,12 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                         <div class="trip_category ">
                             <h3 class="py-2">商品分類 |</h3>
                             <ul>
-                                <li class="py-1 shop_effect">線香</li>
-                                <li class="py-1 shop_effect">飾品</li>
-                                <li class="py-1 shop_effect">擺飾</li>
-                                <li class="py-1 shop_effect">平安符</li>
-                                <li class="py-1 shop_effect">聯名合作</li>
-                                <li class="py-1 shop_effect">熱門商品</li>
+                                <li class="py-1 shop_effect" data-p="Categories=線香">線香</li>
+                                <li class="py-1 shop_effect" data-p="Categories=飾品">飾品</li>
+                                <li class="py-1 shop_effect" data-p="Categories=擺飾">擺飾</li>
+                                <li class="py-1 shop_effect" data-p="Categories=平安符">平安符</li>
+                                <li class="py-1 shop_effect" data-p="Joint_Popular=聯名合作">聯名合作</li>
+                                <li class="py-1 shop_effect" data-p="Joint_Popular=熱門商品">熱門商品</li>
                             </ul>
                             <ul>
                                 <li class="py-1 ">
@@ -161,23 +161,27 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                         </div>
                         <div class="container-flow ">
                             <div class="row col shop_body">
-                                <?php foreach ($product as $value) { ?>
-                                    <div class=" shop_card_body p-0">
-                                        <div class="shop_fff">
-                                            <div class="  shop_card_img  ">
-                                                <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                                <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
-                                            </div>
-                                            <div class="shop_card-text_body">
-                                                <h5 class="shop_card-title"><?= $value['CommodityName_bigLabel'] ?></h5>
-                                                <div class="shop_card-text">
-                                                    <p class="m-0 shop_txt"><?= $value['Commodity_name_smallLabel'] ?></p>
-                                                    <p class="shop_m0">NTD <?= $value['price'] ?></p>
+                                <?php foreach ($product as $value) : ?>
+
+                                    <div class=" shop_card_body p-0" data-sid="<?= $value['sid'] ?>">
+                                        <a href="./shop_page.php">
+                                            <div class="shop_fff">
+                                                <div class="  shop_card_img  ">
+                                                    <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                                    <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
+                                                </div>
+                                                <div class="shop_card-text_body" id="shop_card_text_body">
+                                                    <h5 class="shop_card-title" id="shop_cad_title"><?= $value['CommodityName_bigLabel'] ?></h5>
+                                                    <div class="shop_card-text">
+                                                        <p class="m-0 shop_txt"><?= $value['Commodity_name_smallLabel'] ?></p>
+                                                        <p class="shop_m0">NTD <?= $value['price'] ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                <?php } ?>
+
+                                <?php endforeach; ?>
                                 <!-- <div class=" shop_card_body p-0">
                                     <div class="shop_fff">
                                         <div class="  shop_card_img  ">

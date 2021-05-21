@@ -36,17 +36,11 @@ h3 {
     } */
 
     /* -------------- */
+
     .shop_body_outer{
         position: relative;
-        /* top: 50px; */
-        
-        /* display: flex; */
-        /* flex-direction: row; */
-        /* justify-content: space-between; */
-
     }
     .d-flex{
-        /* display: flex; */
         justify-content: space-between;
     }
     .shop_magnifier{
