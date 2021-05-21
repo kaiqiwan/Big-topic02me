@@ -75,10 +75,16 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
     <div class=" container-fluid shop_body_outer p-0">
         <div class="shop_top100 shop_container container-fluid">
             <nav aria-label="breadcrumb ">
-                <ol class="breadcrumb bg-transparent pl-1 ">
-                    <li class="breadcrumb-item"><a href="#">SHOP / 商店</a></li>
-                    <i class="fas fa-chevron-right"></i>配件飾品</li>
-                </ol>
+                <div class="breadcrumb_style   backgroundimg_1">
+                    <div class="breadcrumb_style_1 ">
+                        <a href="" class="astlyep">SHOP / 商店</a>
+                        <!-- 共用雲端找箭頭icon-->
+                        <img src="./img/nav_arrow_right.svg">
+                        配件飾品
+                        </a>
+
+                    </div>
+                </div>
             </nav>
             <div class="shop_phone_button">
                 <!-- <button class="shop_phone_btn">熱門商品</button>
@@ -164,12 +170,13 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                                 <?php foreach ($product as $value) : ?>
 
                                     <div class=" shop_card_body p-0" data-sid="<?= $value['sid'] ?>">
-                                        <a href="./shop_page.php">
-                                            <div class="shop_fff">
-                                                <div class="  shop_card_img  ">
-                                                    <div class="shop_icon"><i class="far fa-heart"></i></div>
-                                                    <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
-                                                </div>
+
+                                        <div class="shop_fff">
+                                            <div class="  shop_card_img  ">
+                                                <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                                <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
+                                            </div>
+                                            <a href="./shop_page.php">
                                                 <div class="shop_card-text_body" id="shop_card_text_body">
                                                     <h5 class="shop_card-title" id="shop_cad_title"><?= $value['CommodityName_bigLabel'] ?></h5>
                                                     <div class="shop_card-text">
@@ -177,8 +184,9 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                                                         <p class="shop_m0">NTD <?= $value['price'] ?></p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </a>
+                                        </div>
+
                                     </div>
 
                                 <?php endforeach; ?>

@@ -365,6 +365,7 @@ h3 {
 
     .breadcrumb {
         align-items: center;
+        margin-bottom: 50px;
     }
 
     .ml-10 {
@@ -412,7 +413,7 @@ h3 {
     }
 
     .shop_top100 {
-        padding-top: 110px;
+        /* padding-top: 110px; */
         padding-bottom: 50px;
         width: 1400px;
         

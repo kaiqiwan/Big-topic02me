@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- ------------- -->
     <link rel="stylesheet" href="./css/nav_shop_footor_php.css">
+    <link rel="stylesheet" href="./css/nav2.css">
+    <link rel="stylesheet" href="./css/breadcrumb02.css">
     <link rel="stylesheet" href="./css/temple-shop_css-text.css">
     <style>
         .collapsing {
