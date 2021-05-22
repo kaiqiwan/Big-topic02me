@@ -56,4 +56,10 @@
         /* padding: 20px 15px; */
         /* width: 100%; */
     }
+    .breadcrumb_style_1 {
+        padding: 20px 0;
+        align-items: center;
+        /* margin: auto; */
+        margin-bottom: 0px;
+    }
 }

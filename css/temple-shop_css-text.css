@@ -365,7 +365,7 @@ h3 {
 
     .breadcrumb {
         align-items: center;
-        margin-bottom: 50px;
+        
     }
 
     .ml-10 {
@@ -582,7 +582,7 @@ h3 {
     } */
 
     .shop_top100{
-        padding-top: 90px;
+        padding-top: 0px;
     }
     .shop_magnifier{
         display:none;
