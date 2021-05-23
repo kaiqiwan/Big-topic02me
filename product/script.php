@@ -92,9 +92,13 @@
             location.href = location.pathname + searchkey.join('&') + "&page=" + $(this).attr('value');
         }
     });
-    $("#exampleFormControlSelect1").change(function() {
-        location.href = "?Sort_by=" + $(this).find("option:selected").html();
-    });
+    // $("#exampleFormControlSelect1").change(function() {
+    //    location.href = "?Sort_by=" + $(this).find("option:selected").html();
+    // });
+    function onSelect(selectObject) {
+        console.log(selectObject.value);
+        location.href = selectObject.value;
+    }
     // ------------------------------
     $(document).ready(function() {
         $(".shop_card_body .shop_icon").click(function() {

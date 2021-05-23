@@ -9,14 +9,59 @@ $page = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
 if ($_GET != null) {
     unset($_GET['page']);
     foreach ($_GET as $key => $value) {
-        $searchString .= ' and ' . $key . '= "' . $value . '"';
+        if (
+            strcmp($key, "key")    != 0 &&
+            strcmp($key, "value")  != 0 &&
+            strcmp($key, "sortBy") != 0
+        ) {
+            $searchString .= ' and ' . $key . '= "' . $value . '"';
+        }
     }
 }
 // SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
 $c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * 12;
-$product = $pdo->query($c_sql)->fetchAll();
+//$product = $pdo->query($c_sql)->fetchAll();
 // $sql01 = "SELECT * FROM shop ORDER BY Popularity_shop ASC";小到大
 $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
+
+if (isset($_GET["key"]) && strcmp($_GET["key"], "") != 0) {
+    $searchString .= ' and ' . $_GET["key"] . '= "' . $_GET["value"] . '"';
+}
+
+$sortBy = "Popularity_shop";
+if (isset($_GET["sortBy"])) {
+    $sortBy = $_GET["sortBy"];
+}
+
+$order = "DESC";
+if (strcmp($sortBy, "price") == 0) {
+    $order = "ASC";
+}
+
+//$sortBy = "Popularity_shop";
+$c_sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY " . $sortBy . " " . $order . " LIMIT 12 OFFSET " . $page * 12;
+$product = $pdo->query($c_sql2)->fetchAll();
+
+$key = "";
+$val = "";
+
+if (
+    isset($_GET["Categories"]) ||
+    (isset($_GET["key"]) && strcmp($_GET["key"], "Categories") == 0)
+) {
+    $key = "Categories";
+    $val = isset($_GET["Categories"]) ?  $_GET["Categories"] : $_GET["value"];
+} else if (
+    isset($_GET["Joint_Popular"]) ||
+    (isset($_GET["key"]) && strcmp($_GET["key"], "Joint_Popular") == 0)
+) {
+    $key = "Joint_Popular";
+    $val = isset($_GET["Joint_Popular"]) ? $_GET["Joint_Popular"] : $_GET["value"];
+} else {
+    $key = "";
+    $val = "";
+}
+
 // $product = $pdo->query($sql02)->fetchAll();
 // SELECT * FROM shop ORDER BY Popularity_shop DESC
 
@@ -157,11 +202,12 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                             </div>
                             <div class="form-inline display_none">
                                 <label class="pr-3" for="exampleFormControlSelect1">排序方式</label>
-                                <select class="form-control bg-transparent" id="exampleFormControlSelect1" onselect="alert(777)">
+                                <select class="form-control bg-transparent" id="exampleFormControlSelect1" onchange="onSelect(this)">
                                     <option>請選擇</option>
-                                    <option>人氣推薦</option>
-                                    <option>評價最高</option>
-                                    <option>價格(從低到高)</option>
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=Popularity_shop">人氣推薦</option>
+                                    <!-- <option value="{'key':'<?= $key ?>','value':'<?= $val ?>'}">人氣推薦</option> -->
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=Evaluation_shop">評價最高</option>
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=price">價格(從低到高)</option>
                                 </select>
                             </div>
                         </div>
@@ -176,7 +222,7 @@ $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
                                                 <div class="shop_icon"><i class="far fa-heart"></i></div>
                                                 <img class="shop_Scaling" src="./img/shop/shop_new/shop_1~25_new/<?= $value['img1'] ?>" alt="">
                                             </div>
-                                            <a href="./shop_page.php">
+                                            <a href="./shop_page.php?sid=<?= $value['sid'] ?>">
                                                 <div class="shop_card-text_body" id="shop_card_text_body">
                                                     <h5 class="shop_card-title" id="shop_cad_title"><?= $value['CommodityName_bigLabel'] ?></h5>
                                                     <div class="shop_card-text">
