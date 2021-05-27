@@ -4,6 +4,7 @@ $pageName = "product-list";
 
 
 require __DIR__ . '/product/__connect_db.php';
+// $qs = [];
 $searchString = "1 ";
 $page = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
 if ($_GET != null) {
@@ -20,7 +21,30 @@ if ($_GET != null) {
 }
 // SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
 $c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * 12;
-//$product = $pdo->query($c_sql)->fetchAll();
+
+$cate_rows = $pdo->query($c_sql)->fetchAll();
+
+$cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0;
+$qs = [];
+$where = ' WHERE 1 ';
+if (!empty($cate)) {
+    $where .= " AND category_sid=$cate ";
+    $qs['cate'] = $cate;
+}
+
+
+
+
+// $totalRows = $pdo->query($c_sql)->fetch(PDO::FETCH_NUM)[0]; //把產品數量抓出來
+// $totalPages = ceil($totalRows / $page);
+
+// if ($page < 1) $page = 1; //如果$page小於1,也顯示預設值在第一頁
+// if ($page > $totalPages) $page = $totalPages; //如果$page大於$totalPages,就會讓頁碼不會把所有的產品顯示出來
+
+// $p_sql = sprintf("SELECT * FROM shop $searchString LIMIT %s, %s ", ($page - 1) * $page, $page);
+
+// $rows = $pdo->query($c_sql)->fetchAll();
+
 // $sql01 = "SELECT * FROM shop ORDER BY Popularity_shop ASC";小到大
 $sql02 = "SELECT * FROM shop ORDER BY Popularity_shop DESC"; //大到小
 
@@ -28,18 +52,18 @@ if (isset($_GET["key"]) && strcmp($_GET["key"], "") != 0) {
     $searchString .= ' and ' . $_GET["key"] . '= "' . $_GET["value"] . '"';
 }
 
-$sortBy = "Popularity_shop";
+$sortByyyyyy = "Popularity_shop";
 if (isset($_GET["sortBy"])) {
-    $sortBy = $_GET["sortBy"];
+    $sortByyyyyy = $_GET["sortBy"];
 }
 
 $order = "DESC";
-if (strcmp($sortBy, "price") == 0) {
+if (strcmp($sortByyyyyy, "price") == 0) {
     $order = "ASC";
 }
 
 //$sortBy = "Popularity_shop";
-$c_sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY " . $sortBy . " " . $order . " LIMIT 12 OFFSET " . $page * 12;
+$c_sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY " . $sortByyyyyy . " " . $order . " LIMIT 12 OFFSET " . $page * 12;
 $product = $pdo->query($c_sql2)->fetchAll();
 
 $key = "";
@@ -71,47 +95,7 @@ if (
 // ORDER BY "?Popularity_shop=" [DESC];
 
 
-// 分類
-// $c_sql = "SELECT * FROM categories WHERE parent_sid=0";
-// $cate_rows = $pdo->query($c_sql)->fetchAll();
 
-// $cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0;
-// $qs = [];
-// $where = ' WHERE 1 ';
-// if (!empty($cate)) {
-//     $where .= " AND category_sid=$cate ";
-//     $qs['cate'] = $cate;
-// }
-
-// SELECT * FROM `poetry` ORDER BY RAND() LIMIT 1
-
-//取得總筆數, 總頁數, 該頁的商品資料
-
-// $perPage = 12; // 每一頁有幾筆
-// $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // 用戶要看第幾頁的商品
-
-// $t_sql = "SELECT COUNT(1) FROM product $where ";
-// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //拿到總共有幾筆
-// $totalPages = ceil($totalRows / $perPage); //總共有幾頁
-// ceil()無條件進位
-// ??
-// if($page<1) $page=1;
-// if($page>$totalPages) $page=$totalPages;
-
-// $p_sql = sprintf("SELECT * FROM product $where LIMIT %s, %s ", ($page - 1) * $perPage, $perPage);
-
-// $rows = $pdo->query($p_sql)->fetchAll();
-
-
-// echo json_encode([
-//         'perPage' => $perPage,
-//         'cate' => $cate,
-//         'page' => $page,
-//         'totalRows' => $totalRows,
-//         'totalPages' => $totalPages,
-//         'rows' => $rows,
-
-// ], JSON_UNESCAPED_UNICODE);
 ?>
 <?php include __DIR__ . '/product/head.php'; ?>
 
@@ -137,12 +121,12 @@ if (
                 <!-- <button class="shop_phone_btn">商品分類</button> -->
                 <select class="shop_phone_btn">
                     <option value="">商品分類</option>
-                    <option value="Categories=線香">線香</option>
-                    <option>飾品</option>
-                    <option>服飾</option>
-                    <option>平安符</option>
-                    <option>聯名合作</option>
-                    <option>熱門商品</option>
+                    <option data-p="Categories=線香">線香</option>
+                    <option data-p="Categories=飾品">飾品</option>
+                    <option data-p="Categories=擺飾">服飾</option>
+                    <option data-p="Categories=平安符">平安符</option>
+                    <option data-p="Joint_Popular=聯名合作">聯名合作</option>
+                    <option data-p="Joint_Popular=熱門商品">熱門商品</option>
                 </select>
                 <!-- <button class="shop_phone_btn">價錢範圍</button> -->
 
@@ -433,7 +417,19 @@ if (
 
                         </div>
                         <nav class="shop_page " aria-label="Page navigation example">
-                            <!-- ml-10 -->
+                            <!-- <ul class="pagination">
+
+                                <?php for ($i = $page - 2; $i <= $page + 2; $i++) :
+                                    if ($i >= 1 and $i <= $totalPages) :
+                                        $qs['page'] = $i;
+                                ?>
+                                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                            <a class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+
+                            </ul> -->
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link shop_page-item" value="1">1</a></li>
                                 <li class="page-item"><a class="page-link shop_page-item" value="2">2</a></li>

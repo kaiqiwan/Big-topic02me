@@ -10,15 +10,23 @@ $img2 = $shops[0]['img2'];
 $img3 = $shops[0]['img3'];
 $img4 = $shops[0]['img4'];
 
-
+// sprint_r($shops[0]['Categories']);
 $category = $shops[0]['Categories'];
-
-// ----------------------------
-// $single = $pdo->query($sql)->fetchAll();
-
-// -----------------------------
-$sql2 = "SELECT * FROM shop WHERE Categories ='$category' AND sid<>$sid ";
+$sql2 = "SELECT * FROM shop WHERE Categories ='$category'";
 $relations = $pdo->query($sql2)->fetchAll();
+$count = count($relations);
+echo "count: " . $count;
+
+$remainder = $count % 4;
+$group = intval($count / 4) + ($remainder > 0 ? 1 : 0);
+echo "group: " . $group;
+echo "remainder: " . $remainder;
+for ($i = 0; $i < $group; $i++) {
+    // 0, 1, 2, ..., group -1
+    // 4 次 if i = 0 ~ group -2
+    // remainder次 if i = group - 1
+}
+// print_r($relations);
 
 
 
@@ -251,7 +259,6 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
         </div>
     </div>
     <div class="shop_container container-fluid px-lg-5 ">
-
         <div class="row">
             <div id="carouselExampleIndicators" class="carousel slide d-lg-none" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -259,23 +266,21 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
-                <?php foreach ($shops as $sh) : ?>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="./img/shop/shop_new/shop_1~25_new/<?= $sh['img2'] ?> " alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="./img/shop/shop_new/shop_1~25_new/<?= $sh['img3'] ?> " alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="./img/shop/shop_new/shop_1~25_new/<?= $sh['img4'] ?> " alt="Third slide">
-                        </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="img/028.png" alt="First slide">
                     </div>
-                <?php endforeach; ?>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="img/292.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="img/293.jpg" alt="Third slide">
+                    </div>
+                </div>
             </div>
         </div>
         <?php foreach ($shops as $sh) : ?>
-            <div class="row shop_page_body" data-sid="<?= $sh['sid'] ?>">
+            <div class="row">
 
                 <div class="col-lg-7 shop_title_img  d-lg-flex pl-0 d-none">
                     <div class="col-3  shop_imghover row justify-content-between no-gutters">
@@ -350,7 +355,7 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                     <div class="shop_re_text"><?= $rel['Commodity_name_smallLabel'] ?></div>
                 </div>
             <?php endforeach; ?>
-            <!-- <div class="col-lg-3 col-5 mb-5">
+            <div class="col-lg-3 col-5 mb-5">
                 <div class="shop_re_img mb-2">
                     <img src="img/013.png" width="100%" />
                     <div class="shop_re_more">
@@ -373,172 +378,253 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                     </div>
                 </div>
                 <div class="shop_re_text">藝術廟宇戒指</div>
-            </div> -->
+            </div>
         </div>
         <div class="mb-5 mt-5 shop_scrolling_wrapper flex-nowrap flex-row d-none d-lg-block">
             <div id="carouselHotControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner container-fluid px-0 ">
                     <div class="carousel-item active">
                         <div class="row">
-                            <?php for ($i = 0; $i < 4; $i++) :
-                                if (!empty($relations[$i])) :
-                                    $r = $relations[$i];
-                            ?>
-                                    <div class="col-lg-3">
-                                        <div class="shop_re_img mb-2">
-                                            <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
-                                            <div class="shop_re_more">
-                                            </div>
+                            <?php foreach ($relations as $rel) : ?>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="./img/shop/shop_new/shop_1~25_new/<?= $rel['img1'] ?>" width="100%" />
+                                        <div class="shop_re_more">
                                         </div>
-                                        <div class="shop_re_text pt-1"><?= $r['CommodityName_bigLabel'] ?></div>
                                     </div>
-                            <?php endif;
-                            endfor; ?>
+                                    <div class="shop_re_text pt-1"><?= $rel['Commodity_name_smallLabel'] ?> </div>
+                                </div>
+                            <?php endforeach; ?>
+                            <!-- <?php for ($i = 0; $i < $group; $i++) : ?>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <?php if ($i == ($group - 1)) : ?>
+                                            <?php for ($j = 0; $j < $remainder; $j++) : ?>
+                                                <div class="col-lg-3">
+                                                    <div class="shop_re_img mb-2">
+                                                        <img src="./img/shop/shop_new/shop_1~25_new/<?= $relations[$i * 4 + $j]['img1'] ?>" width="100%" />
+                                                        <div class="shop_re_more">
+                                                        </div>
+                                                    </div>
+                                                    <div class="shop_re_text pt-1"><?= $relations[$i * 4 + $j]['Commodity_name_smallLabel'] ?> </div>
+                                                </div>
+                                            <?php endfor; ?>
+                                        <?php else : ?>
+                                            <?php for ($j = 0; $j < 4; $j++) : ?>
+                                                <div class="col-lg-3">
+                                                    <div class="shop_re_img mb-2">
+                                                        <img src="./img/shop/shop_new/shop_1~25_new/<?= $relations[$i * 4 + $j]['img1'] ?>" width="100%" />
+                                                        <div class="shop_re_more">
+                                                        </div>
+                                                    </div>
+                                                    <div class="shop_re_text pt-1"><?= $relations[$i * 4 + $j]['Commodity_name_smallLabel'] ?> </div>
+                                                </div>
+                                            <?php endfor; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endfor; ?> -->
+                            <!-- <div class="col-lg-3">
+                                <div class="shop_re_img mb-2">
+                                    <img src="img/013.png" width="100%" />
+                                    <div class="shop_re_more">
+                                    </div>
+                                </div>
+                                <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="shop_re_img mb-2">
+                                    <img src="img/011.png" width="100%" />
+                                    <div class="shop_re_more">
+                                    </div>
+                                </div>
+                                <div class="shop_re_text pt-1">媽祖胸針 </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="shop_re_img mb-2">
+                                    <img src="img/013.png" width="100%" />
+                                    <div class="shop_re_more">
+                                    </div>
+                                </div>
+                                <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                            </div>
+                        </div> -->
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/011.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">媽祖胸針 by </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/013.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/011.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">媽祖胸針 </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/013.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/011.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">媽祖胸針 by </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/013.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/011.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">媽祖胸針 </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="shop_re_img mb-2">
+                                        <img src="img/013.png" width="100%" />
+                                        <div class="shop_re_more">
+                                        </div>
+                                    </div>
+                                    <div class="shop_re_text pt-1">藝術廟宇戒指</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <?php if (count($relations) > 4) : ?>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <?php for ($i = 4; $i < 8; $i++) :
-                                    if (!empty($relations[$i])) :
-                                        $r = $relations[$i];
-                                ?>
-                                        <div class="col-lg-3">
-                                            <div class="shop_re_img mb-2">
-                                                <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
-                                                <div class="shop_re_more">
-                                                </div>
-                                            </div>
-                                            <div class="shop_re_text pt-1"><?= $r['CommodityName_bigLabel'] ?></div>
-                                        </div>
-                                <?php endif;
-                                endfor; ?>
+                    <a class="carousel-control-prev" href="#carouselHotControls" role="button" data-slide="prev">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselHotControls" role="button" data-slide="next">
+                        <i class="fas fa-chevron-right"></i>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- login -->
+        <div class="modal fade" id="loginCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-re">
+                    <div class="modal-header modal-header-re">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">登入 | LOGIN</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-3">
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
                             </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (count($relations) > 8) : ?>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <?php for ($i = 8; $i < 12; $i++) :
-                                    if (!empty($relations[$i])) :
-                                        $r = $relations[$i];
-                                ?>
-                                        <div class="col-lg-3">
-                                            <div class="shop_re_img mb-2">
-                                                <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
-                                                <div class="shop_re_more">
-                                                </div>
-                                            </div>
-                                            <div class="shop_re_text pt-1"><?= $r['CommodityName_bigLabel'] ?></div>
-                                        </div>
-                                <?php endif;
-                                endfor; ?>
+                            <div class="form-group">
+                                <input class="form-control form-control-re" id="password-text" placeholder="Password">
                             </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
-                <a class="carousel-control-prev" href="#carouselHotControls" role="button" data-slide="prev">
-                    <i class="fas fa-chevron-left"></i>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselHotControls" role="button" data-slide="next">
-                    <i class="fas fa-chevron-right"></i>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- login -->
-    <div class="modal fade" id="loginCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-re">
-                <div class="modal-header modal-header-re">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="exampleModalCenterTitle">登入 | LOGIN</h5>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-3">
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control form-control-re" id="password-text" placeholder="Password">
-                        </div>
-                        <input type="checkbox"> 記住帳號
-                    </form>
-                </div>
-                <div class="modal-footer modal-footer-re">
-                    <button type="button" class="btn btn-primary btn-primary-re">登入</button>
-                </div>
-                <div class="modal-footer2-re mt-3">
-                    <a class="mr-5" data-toggle="modal" data-target="#lostPassword" id="passwordbtn">忘記密碼</a>
-                    <a data-toggle="modal" data-target="#registerCenter" id="registerbtn">註冊帳號</a>
+                            <input type="checkbox"> 記住帳號
+                        </form>
+                    </div>
+                    <div class="modal-footer modal-footer-re">
+                        <button type="button" class="btn btn-primary btn-primary-re">登入</button>
+                    </div>
+                    <div class="modal-footer2-re mt-3">
+                        <a class="mr-5" data-toggle="modal" data-target="#lostPassword" id="passwordbtn">忘記密碼</a>
+                        <a data-toggle="modal" data-target="#registerCenter" id="registerbtn">註冊帳號</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- lost password -->
-    <div class="modal fade" id="lostPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-re">
-                <div class="modal-header modal-header-re">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="exampleModalCenterTitle">找回密碼</h5>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-3">
-                        <div class="form-group mb-3">
-                            <p>請輸入您註冊的電子郵件，您將會在電子郵件信箱中收到重設密碼的連結。</p>
-                            <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer modal-footer-re">
-                    <button type="button" class="btn btn-primary btn-primary-re">送出</button>
+        <!-- lost password -->
+        <div class="modal fade" id="lostPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-re">
+                    <div class="modal-header modal-header-re">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">找回密碼</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-3">
+                            <div class="form-group mb-3">
+                                <p>請輸入您註冊的電子郵件，您將會在電子郵件信箱中收到重設密碼的連結。</p>
+                                <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer modal-footer-re">
+                        <button type="button" class="btn btn-primary btn-primary-re">送出</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- register -->
-    <div class="modal fade" id="registerCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-re">
-                <div class="modal-header modal-header-re">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="exampleModalCenterTitle">註冊 | REGISTER</h5>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-3">
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control form-control-re" id="account-name" placeholder="User Name">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control form-control-re" id="password-text" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control form-control-re" id="password-text" placeholder="Repeat Password">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer modal-footer-re">
-                    <button type="button" class="btn btn-primary btn-primary-re">註冊</button>
+        <!-- register -->
+        <div class="modal fade" id="registerCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-re">
+                    <div class="modal-header modal-header-re">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">註冊 | REGISTER</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-3">
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control form-control-re" id="account-name" placeholder="User Name">
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control form-control-re" id="account-name" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-re" id="password-text" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-re" id="password-text" placeholder="Repeat Password">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer modal-footer-re">
+                        <button type="button" class="btn btn-primary btn-primary-re">註冊</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <?php include __DIR__ . '/shop_page/shop_page_footer.php'; ?>
-    <?php include __DIR__ . '/shop_page/shop_page_script.php'; ?>
+        <?php include __DIR__ . '/shop_page/shop_page_footer.php'; ?>
+        <?php include __DIR__ . '/shop_page/shop_page_script.php'; ?>
 </body>

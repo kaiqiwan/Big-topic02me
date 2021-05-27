@@ -638,11 +638,23 @@ h3 {
        z-index: 50;
        
     } */
-    .shop_phone_button select{
+    .shop_phone_btn{
         border-radius: 30px;
         padding: 0px 5px;
         height: 35px;
         box-shadow:2px 1px 3px #33333364;
+    }
+    /* .shop_phone_btn:active,
+    .shop_phone_btn:hover{
+        background-color: #cc543a;
+        color: #fff;
+        border-radius: 30px;
+        padding: 0px 5px;
+        height: 35px;
+        box-shadow:2px 1px 3px #33333364;
+    } */
+    .shop_phone_button option{
+        /* background-color: #fff; */
     }
     .shop_phone_button{
         position: relative;
