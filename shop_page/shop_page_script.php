@@ -64,7 +64,7 @@
         $('#loginCenter').modal('hide');
     })
     // ----------分頁-收藏愛心--------------
-    const addToCartBtn = $('.mybtn_like'); //換成愛心
+    const addToCartBtn = $('.mybtn_like .shop_icon'); //換成愛心
 
     addToCartBtn.click(function() {
         const card = $(this).closest('.shop_page_body'); //產品卡片父層

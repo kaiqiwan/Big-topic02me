@@ -1,5 +1,6 @@
 <!-- <script src="../js/jquery-3.5.1.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
@@ -9,11 +10,30 @@
     $("#ex8").slider({
         tooltip: 'always',
         tooltip_position: 'bottom'
+    }).on('slideStop', function(e) {
+        var key = $(this).attr('data-key');
+        var val = $(this).attr('data-val');
+        var sortBy = $(this).attr('data-sort');
+        if (key != "") {
+            location.href = "product.php?priceMax=" + e.value + "&key=" + key + "&value=" + val + "&sortBy=" + sortBy;
+        } else {
+            location.href = "product.php?priceMax=" + e.value + "&sortBy=" + sortBy;
+        }
     });
     $("#ex9").slider({
         tooltip: 'always',
         tooltip_position: 'bottom'
+    }).on('slideStop', function(e) {
+        var key = $(this).attr('data-key');
+        var val = $(this).attr('data-val');
+        var sortBy = $(this).attr('data-sort');
+        if (key != "") {
+            location.href = "product.php?priceMax=" + e.value + "&key=" + key + "&value=" + val + "&sortBy=" + sortBy;
+        } else {
+            location.href = "product.php?priceMax=" + e.value + "&sortBy=" + sortBy;
+        }
     });
+
     // 火箭推
     // function top0() {
     //     window.scrollTo({
@@ -136,9 +156,9 @@
 
 
     // ----------收藏愛心--------------
-    const addToCartBtn = $('.shop_icon'); //換成愛心
+    const collectHeartBtn = $('.shop_icon'); //換成愛心
 
-    addToCartBtn.click(function() {
+    collectHeartBtn.click(function() {
         const card = $(this).closest('.shop_card_body'); //產品卡片父層
         const shopId = card.attr('data-sid'); //pid改成shop_id
 
@@ -155,83 +175,23 @@
 
     })
 
-    // ---------------分頁---------------------
-    let cate = 0;
-    let page = 1;
-    let pData = {}; // 商品資料
-    let categories = $('.categories button');
-    const p_list = $('.p-list');
-    const pagination = $('.pagination');
+    // -----------------------------------------------
+    const addToCartBtn = $('.mybtn_cart_add'); //加入購物車
 
-    const productTpl = o => {
-        return `<div class="col-md-3">
-            <div class="card" >
-                <img src="/proj60/proj/imgs/small/${o.book_id}.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="card-title">${o.bookname}</h6>
-                    <p><i class="fas fa-user-friends"></i> ${o.author}</p>
-                    <p><i class="fas fa-dollar-sign"></i> ${o.price}</p>
-                </div>
-            </div>
-        </div>
-        `;
-    }
-    const pageBtnTpl = n => {
-        return `<li class="page-item ${ n===page ? 'active' : '' }">
-                <a class="page-link" href="javascript: changePage(${n})">${n}</a>
-            </li>
-        `;
-    }
-
-    categories.click(function() {
-        categories.removeClass('active');
-        $(this).addClass('active');
-        // console.log(this);
+    addToCartBtn.click(function() {
+        const card = $(this).closest('.shop_card_body'); //產品卡片父層
+        const shopId = card.attr('data-sid'); //pid改成shop_id
 
 
-    });
+        // console.log({pid, qty}, card.find('.card-title').text());
 
-    // 取得商品資料
-    function getProducts() {
-        $.get('product-list-api.php', {
-            cate,
-            page
-        }, function(data) {
-            pData = data;
-            renderProducts();
-            renderPagination();
+        $.get('shop_cart_api.php', { //改成判斷式php
+            shop_id: shopId, //$shop_id
 
+        }, function(data) { //data代表json的$output
+            console.log(data);
+            // showCartCount(data); // 更新選單上數量的提示 //計算購物車的商品數量
         }, 'json');
 
-    }
-    //ajax
-    categories.eq(0).click();
-
-    function changeCate(c) {
-        cate = c;
-        page = 1;
-        getProducts();
-    }
-
-    function changePage(p) {
-        page = p;
-        getProducts();
-    }
-
-    // 產生商品畫面的區塊
-    function renderProducts() {
-        p_list.html('');
-        if (pData.rows && pData.rows.forEach) {
-            pData.rows.forEach(el => {
-                p_list.append(productTpl(el));
-            });
-        }
-    }
-
-    function renderPagination() {
-        pagination.html('');
-        for (let i = 1; i <= pData.totalPages; i++) {
-            pagination.append(pageBtnTpl(i));
-        }
-    }
+    })
 </script>

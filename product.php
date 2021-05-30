@@ -6,21 +6,30 @@ $pageName = "product-list";
 require __DIR__ . '/product/__connect_db.php';
 // $qs = [];
 $searchString = "1 ";
-$page = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 0;
 if ($_GET != null) {
     unset($_GET['page']);
     foreach ($_GET as $key => $value) {
         if (
             strcmp($key, "key")    != 0 &&
             strcmp($key, "value")  != 0 &&
-            strcmp($key, "sortBy") != 0
+            strcmp($key, "sortBy") != 0 &&
+            strcmp($key, "priceMax") != 0
         ) {
             $searchString .= ' and ' . $key . '= "' . $value . '"';
         }
     }
 }
+
+$priceMax = 5000;
+if (isset($_GET['priceMax'])) {
+    $priceMax = intval($_GET['priceMax']);
+    $searchString .= ' and price <= ' . $priceMax;
+}
+
 // SELECT * FROM `shop` WHERE 1 ORDER BY Popularity_shop DESC LIMIT 12 OFFSET 2
-$c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * 12;
+$perPage = 12;
+$c_sql = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop DESC LIMIT 12 OFFSET " . $page * $perPage;
 
 $cate_rows = $pdo->query($c_sql)->fetchAll();
 
@@ -31,12 +40,6 @@ if (!empty($cate)) {
     $where .= " AND category_sid=$cate ";
     $qs['cate'] = $cate;
 }
-
-
-
-
-// $totalRows = $pdo->query($c_sql)->fetch(PDO::FETCH_NUM)[0]; //把產品數量抓出來
-// $totalPages = ceil($totalRows / $page);
 
 // if ($page < 1) $page = 1; //如果$page小於1,也顯示預設值在第一頁
 // if ($page > $totalPages) $page = $totalPages; //如果$page大於$totalPages,就會讓頁碼不會把所有的產品顯示出來
@@ -63,8 +66,14 @@ if (strcmp($sortByyyyyy, "price") == 0) {
 }
 
 //$sortBy = "Popularity_shop";
-$c_sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY " . $sortByyyyyy . " " . $order . " LIMIT 12 OFFSET " . $page * 12;
+$perPage = 12;
+$c_sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY " . $sortByyyyyy . " " . $order . " LIMIT 12 OFFSET " . $page * $perPage;
 $product = $pdo->query($c_sql2)->fetchAll();
+
+$t_sql = "SELECT COUNT(1) FROM shop WHERE " . $searchString;
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; //把產品數量抓出來
+// PDO::FETCH_NUM 返回以數字作為索引鍵(key)的陣列(array)，由0開始編號
+$totalPages = ceil($totalRows / $perPage);
 
 $key = "";
 $val = "";
@@ -138,7 +147,7 @@ if (
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                     <div>
-                        <input id="ex8" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" />
+                        <input id="ex8" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="5000" data-slider-step="100" data-slider-value="<?= $priceMax ?> " data-key="<?= $key ?>" data-val="<?= $val ?>" data-sort="<?= $sortByyyyyy ?>" />
                     </div>
                 </div>
             </div>
@@ -169,7 +178,7 @@ if (
                                     <!-- mt-5 -->
                                     <h3 class='mb-2'>價錢範圍 |</h3>
                                     <div>
-                                        <input id="ex9" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" />
+                                        <input id="ex9" data-slider-id='trip_price_range8' type="text" data-slider-min="0" data-slider-max="5000" data-slider-step="100" data-slider-value="<?= $priceMax ?>" data-key="<?= $key ?>" data-val="<?= $val ?>" data-sort="<?= $sortByyyyyy ?>" />
                                     </div>
                                 </li>
                             </ul>
@@ -188,10 +197,10 @@ if (
                                 <label class="pr-3" for="exampleFormControlSelect1">排序方式</label>
                                 <select class="form-control bg-transparent" id="exampleFormControlSelect1" onchange="onSelect(this)">
                                     <option>請選擇</option>
-                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=Popularity_shop">人氣推薦</option>
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&priceMax=<?= $priceMax ?>&sortBy=Popularity_shop">人氣推薦</option>
                                     <!-- <option value="{'key':'<?= $key ?>','value':'<?= $val ?>'}">人氣推薦</option> -->
-                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=Evaluation_shop">評價最高</option>
-                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&sortBy=price">價格(從低到高)</option>
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&priceMax=<?= $priceMax ?>&sortBy=Evaluation_shop">評價最高</option>
+                                    <option value="?key=<?= $key ?>&value=<?= $val ?>&priceMax=<?= $priceMax ?>&sortBy=price">價格(從低到高)</option>
                                 </select>
                             </div>
                         </div>
@@ -417,26 +426,26 @@ if (
 
                         </div>
                         <nav class="shop_page " aria-label="Page navigation example">
-                            <!-- <ul class="pagination">
-
-                                <?php for ($i = $page - 2; $i <= $page + 2; $i++) :
-                                    if ($i >= 1 and $i <= $totalPages) :
-                                        $qs['page'] = $i;
-                                ?>
-                                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i ?></a>
-                                        </li>
-                                    <?php endif; ?>
-                                <?php endfor; ?>
-
-                            </ul> -->
                             <ul class="pagination">
+                                <?php for ($i = 0; $i < $totalPages; $i++) :
+                                    $qs['page'] = $i;
+                                    $qs['key'] = $key;
+                                    $qs['value'] = $val;
+                                    $qs['sortBy'] = $sortByyyyyy;
+                                    $qs['priceMax'] = $priceMax;
+                                ?>
+                                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i + 1 ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                            </ul>
+                            <!-- <ul class="pagination">
                                 <li class="page-item"><a class="page-link shop_page-item" value="1">1</a></li>
                                 <li class="page-item"><a class="page-link shop_page-item" value="2">2</a></li>
                                 <li class="page-item"><a class="page-link shop_page-item" value="3">3</a></li>
                                 <li class="page-item"><a class="page-link shop_page-item" value="4">4</a></li>
                                 <li class="page-item"><a class="page-link shop_page-item" value="5">5</a></li>
-                            </ul>
+                            </ul> -->
                         </nav>
                     </div>
 

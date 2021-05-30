@@ -37,6 +37,12 @@
         a:hover {
             color: #000 !important;
         }
+
+        /* .shop_phone_btn  */
+        select {
+            border-radius: 30px;
+            width: 92px;
+        }
     </style>
 </head>
 <?php

@@ -343,7 +343,10 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
             <?php foreach ($relations as $rel) : ?>
                 <div class="col-lg-3 col-5 mb-5">
                     <div class="shop_re_img mb-2">
-                        <img src="./img/shop/shop_new/shop_1~25_new/<?= $rel['img1'] ?>" width="100%" />
+                        <div class="shop_icon"><i class="far fa-heart"></i></div>
+                        <a href="./shop_page.php">
+                            <img src="./img/shop/shop_new/shop_1~25_new/<?= $rel['img1'] ?>" width="100%" />
+                        </a>
                         <div class="shop_re_more">
                         </div>
                     </div>
@@ -386,7 +389,10 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                             ?>
                                     <div class="col-lg-3">
                                         <div class="shop_re_img mb-2">
-                                            <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                            <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                            <a href="./shop_page.php">
+                                                <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                            </a>
                                             <div class="shop_re_more">
                                             </div>
                                         </div>
@@ -405,7 +411,10 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                                 ?>
                                         <div class="col-lg-3">
                                             <div class="shop_re_img mb-2">
-                                                <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                                <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                                <a href="./shop_page.php">
+                                                    <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                                </a>
                                                 <div class="shop_re_more">
                                                 </div>
                                             </div>
@@ -425,7 +434,10 @@ $sql2 = "SELECT * FROM shop WHERE " . $searchString . " ORDER BY Popularity_shop
                                 ?>
                                         <div class="col-lg-3">
                                             <div class="shop_re_img mb-2">
-                                                <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                                <div class="shop_icon"><i class="far fa-heart"></i></div>
+                                                <a href="./shop_page.php">
+                                                    <img src="./img/shop/shop_new/shop_1~25_new/<?= $r['img1'] ?>" width="100%" />
+                                                </a>
                                                 <div class="shop_re_more">
                                                 </div>
                                             </div>
