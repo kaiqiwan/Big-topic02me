@@ -174,24 +174,4 @@
         }, 'json');
 
     })
-
-    // -----------------------------------------------
-    const addToCartBtn = $('.mybtn_cart_add'); //加入購物車
-
-    addToCartBtn.click(function() {
-        const card = $(this).closest('.shop_card_body'); //產品卡片父層
-        const shopId = card.attr('data-sid'); //pid改成shop_id
-
-
-        // console.log({pid, qty}, card.find('.card-title').text());
-
-        $.get('shop_cart_api.php', { //改成判斷式php
-            shop_id: shopId, //$shop_id
-
-        }, function(data) { //data代表json的$output
-            console.log(data);
-            // showCartCount(data); // 更新選單上數量的提示 //計算購物車的商品數量
-        }, 'json');
-
-    })
 </script>

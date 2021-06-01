@@ -191,7 +191,7 @@ if (
 
                         <div class="shop_Displacement d-flex mb-5 display_none  col p-0">
                             <div class="shop_h3 display_none">
-                                <h4>配件飾品 | Accessories</h4>
+                                <h4></h4>
                             </div>
                             <div class="form-inline display_none">
                                 <label class="pr-3" for="exampleFormControlSelect1">排序方式</label>

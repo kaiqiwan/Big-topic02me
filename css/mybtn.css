@@ -24,17 +24,19 @@ h3 {
     height: 100%;
     object-fit: cover;
 }
-
+/* .shop_small_img{
+    height: 160.78px;
+    } */
 .shop_title_img img {
     border-radius: 5px;
 
 }
-.shop_page_img img {
+/* .shop_small_img img {
     border-radius: 5px;
     width: 100%;
-    height: 90%;
+    height: 100%;
     object-fit: cover;
-}
+} */
 
 .shop_title_img .shop_imghover img:hover {
     transform: scale(1.1, 1.1);
@@ -240,10 +242,10 @@ h3 {
     transition: all .3s ease-out;
 }
 
-/* #carouselHotControls i {
+#carouselHotControls i {
     font-size: 20px;
     color: #707070;
-} */
+}
 
 .carousel-control-prev {
     left: -110px;
@@ -305,72 +307,7 @@ h3 {
 .mybtn_like.active::after {
     display: none;
 }
-/* ---------------桌機板-愛心------------------- */
-.shop_icon {
-    position: absolute;
-    right: 3%;
-    top: 2%;
-    z-index: 2;
-    background-color: #FFF;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    border: 2px solid #cc543a;
-    
-}
 
-.shop_icon:hover i{
-    font-size: 26px;
-    /* font-weight: 900; */
-    color: #cc543a;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    /* transform: translateY(32%); */
-}
-.shop_icon.active{
-    right: 3%;
-    top: 3%;
-    font-size: 26px;
-    /* font-weight: 900; */
-    background-color:#cc543a;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    transform: translateY(-5%);
-}
-.shop_icon i{
-
-    font-size: 26px;
-    color: #cc543a;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    transform: translateY(32%);
-}
-.shop_icon .fas{
-    font-size: 20px;
-    color: #fff;
-}
-.shop_icon.active i{
-   
-    font-weight: 900;
-    font-size: 24px;
-    color: #fff;
-    transform: translateY(10%);
-}
-.shop_icon .fas{
-    font-size: 20px;
-    color: #fff;
-}
-.fa-heart:hover{
-    color: #cc543a;
-    font-weight: 900;
-    font-size: 22px;
-}
 
 /* -------------------手機板----------------------- */
 @media (max-width: 991px) {
@@ -407,69 +344,7 @@ h3 {
         text-overflow: ellipsis;
         width: 126px;
     }
-    /* ------------------手機板-愛心------------------------ */
-    .shop_icon {
-        position: absolute;
-        right: 3%;
-        top: 3%;
-        z-index: 2;
-        background-color: #FFF;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        border: 2px solid #cc543a;
-    }
-
-    .shop_icon:hover{
-        background-color:#FFF;
-        border: 2px solid #cc543a;
-    }
-    .shop_icon:active{
-        font-size: 20px;
-        background-color:#cc543a;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        /* transform: translateY(10%); */
-    }
-    .shop_icon.active{
-        background-color:#cc543a;
-    }
     
-    .shop_icon:hover i{
-        font-size: 20px;
-        color: #cc543a;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        transform: translateY(20%);
-    }
-    .shop_icon i{
-        font-size: 20px;
-        color: #cc543a;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        transform: translateY(20%);
-    }
-    .shop_icon .fas{
-        font-size: 20px;
-        color: #fff;
-    }
-    .shop_icon.active i{
-        font-weight: 900;
-        font-size: 18px;
-        color: #fff;
-        transform: translateY(10%);
-    }
-    .fa-heart:hover{
-        color: #cc543a;
-        font-weight: 900;
-        font-size: 18px;
-    }
 
 }
 

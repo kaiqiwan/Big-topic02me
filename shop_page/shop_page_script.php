@@ -64,7 +64,7 @@
         $('#loginCenter').modal('hide');
     })
     // ----------分頁-收藏愛心--------------
-    const addToCartBtn = $('.mybtn_like .shop_icon'); //換成愛心
+    const addToCartBtn = $('.mybtn_like'); //換成愛心
 
     addToCartBtn.click(function() {
         const card = $(this).closest('.shop_page_body'); //產品卡片父層
@@ -82,4 +82,47 @@
         }, 'json');
 
     })
+    // --------------分頁商品-回傳購物內容------------------------------
+    const addCartBtn = $('mybtn_cart_add'); //購物車按鈕
+    // console.log('addCartBtn-hi')
+    addCartBtn.click(function() {
+        const card = $(this).closest('.shop_page_body'); //卡片父層
+        const cardId = card.attr('data-sid'); //購物車按鈕
+        const qty = card.find('#demo3').val(); //購物車計數器
+
+        $.get('shop_cart_api.php', {
+            // shop_id: shopId,
+            action: 'add',
+            card_id: cardId,
+            qty
+        }, function(data) {
+            console.log(data);
+            showCartCount(data); // 更新選單上數量的提示
+        }, 'json');
+
+    })
+
+
+    // //PC版購物車按鈕的傳送資料
+    // const addToCartPBtn = $('.add-to-cart');
+    // addToCartPBtn.click(function() {
+    //     // console.log('hi')
+    //     const card = $(this).closest('.purchase_product');//卡片父層
+    //     const pid = card.attr('data-sid');//購物車按鈕
+    //     const qty = card.find('.num').val();//購物車計數器
+    //     // console.log({
+    //     //     pid,
+    //     //     qty
+    //     // }, card.find('.card-title').text());
+
+    //     $.get('product-detail-api.php', {
+    //         action: 'add',
+    //         pid,
+    //         qty
+    //     }, function(data) {
+    //         console.log(data);
+    //         showCartCount(data); // 更新選單上數量的提示
+    //     }, 'json');
+
+    // })
 </script>

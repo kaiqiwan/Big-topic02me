@@ -36,6 +36,8 @@
 
         a:hover {
             color: #000 !important;
+            text-decoration: none;
+            /* 去連結底線 */
         }
 
         /* .shop_phone_btn  */

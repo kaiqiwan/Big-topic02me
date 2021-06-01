@@ -17,7 +17,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/mybtn.css">
+    <style>
+        a {
+            color: #000;
+        }
 
+        a:hover {
+            color: #000 !important;
+            text-decoration: none;
+            /* 去連結底線 */
+        }
+    </style>
 
 
 </head>
